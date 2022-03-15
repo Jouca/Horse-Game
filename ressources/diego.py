@@ -1,10 +1,53 @@
 import pygame
+from PIL import ImageOps, Image
 try:
-    from constant import COLOR
-    from functions import get_font_size
+    from constant import FONT_HEIGHT, COLOR
 except ModuleNotFoundError:
-    from .constant import COLOR
-    from .functions import get_font_size
+    from .constant import FONT_HEIGHT, COLOR
+
+def get_font_size(font_height):
+    """récupère une valeur de taille de police selon `font_height` un entier
+    naturel représentant la hauteur de font voulu en nombre de pixel sur la
+    fenêtre de jeu."""
+    if font_height < 19:
+        return 12
+    else:
+        i = 0
+        try:
+            while font_height > FONT_HEIGHT[i]:
+                i += 1
+        except IndexError:
+            pass
+        return i + 12
+
+
+def apply_color(image, color):
+    alpha = image.split()[3]  # [r, g, b, a][3] -> a
+
+    colored = ImageOps.colorize(
+        image.convert("L"), black=(0, 0, 0), white=color
+    )
+    colored.putalpha(alpha)
+
+    return colored
+
+
+def load_PIL_image(image_path):
+    """Charge une image en utilisant PIL"""
+    return Image.open(image_path)
+
+
+def convert_PIL_to_pygame(image):
+    """
+    Convertit une image PIL en image pygame.
+    """
+    mode = image.mode
+    size = image.size
+    data = image.tobytes()
+
+    py_image = pygame.image.fromstring(data, size, mode)
+    return py_image
+
 
 class Button:
     """crée un bouton visuel formaté avec le style général du jeu.
