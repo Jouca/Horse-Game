@@ -1,4 +1,6 @@
+from ast import Mod
 import pygame
+from ressources.menus import controles, affichage_menu
 
 screen_size = (960, 720)
 pygame.init()
@@ -10,16 +12,16 @@ def main():
     pygame.display.set_caption("Pygame")
     screen = pygame.display.set_mode(screen_size)
     clock = pygame.time.Clock()
-    running = True
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    var = {
+        "jeu_en_cours": True,
+        "menuSelect": "principal",
+    }
 
-        screen.fill((0, 0, 0))
-        pygame.draw.rect(screen, (255, 0, 0), (0, 0, 720, 720))
-        pygame.display.flip()
+    while var["jeu_en_cours"]:
+        var = affichage_menu(var, screen, clock)
+        var = controles(var)
+
         clock.tick(60)
 
 if __name__ == "__main__":
