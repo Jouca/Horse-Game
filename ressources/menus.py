@@ -1,10 +1,20 @@
 import pygame
+try:
+    from classes import Button1
+    from constant import COLOR
+except ModuleNotFoundError:
+    from .classes import Button1
+    from .constant import COLOR
 
 def affichage_menu_principal(screen, var):
     """
     Affiche le menu principal.
     """
-    screen.fill((255, 255, 255))
+    screen.fill(COLOR["SILVER"])
+    # Création du bouton "Jouer"
+    bouton_jouer = Button1(screen, (0.4, 0, 0.2, 0.2), "Jouer")
+    bouton_jouer.change_color(COLOR["BRONZE"])
+    bouton_jouer.draw(screen)
 
     return var
 

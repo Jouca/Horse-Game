@@ -1,15 +1,14 @@
-from ast import Mod
 import pygame
 from ressources.menus import controles, affichage_menu
 
-screen_size = (960, 720)
 pygame.init()
+screen_size = (960, 720)
 
 def main():
     """
     Boucle du jeu
     """
-    pygame.display.set_caption("Pygame")
+    pygame.display.set_caption("Jeu des chevaux")
     screen = pygame.display.set_mode(screen_size)
     clock = pygame.time.Clock()
 
