@@ -120,7 +120,6 @@ class Button:
                 # dans le cas où l'appuie est effectué sur un bouton
                 if self.mouse_on(event):
                     # le son "click" est joué 
-                    pygame.mixer.Sound.play(Button1.click)
                     return True        
         return False
     

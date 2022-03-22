@@ -1,9 +1,9 @@
 import pygame
 try:
-    from diego import Button1, apply_color, load_PIL_image, convert_PIL_to_pygame
+    from diego import apply_color, load_PIL_image, convert_PIL_to_pygame
     from constant import COLOR
 except ModuleNotFoundError:
-    from .diego import Button1, apply_color, load_PIL_image, convert_PIL_to_pygame
+    from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame
     from .constant import COLOR
 
 def affichage_menu_principal(screen, var):
@@ -19,7 +19,7 @@ def affichage_menu_principal(screen, var):
     image4 = apply_color(load_PIL_image("ressources/sprites/chess.png"), COLOR["GREEN"])
     screen.blit(convert_PIL_to_pygame(image3), (20, 20))
     """
-    var["button"]["jouer"].change_color(COLOR["BRONZE"])
+    var["button"]["jouer"].change_color(COLOR["BLUE_PAUL"])
     var["button"]["jouer"].draw(screen)
 
     return var
@@ -38,6 +38,8 @@ def controles_principal(var, event):
     """
     Gestion des contrôles du menu principal.
     """
+    if var["button"]["jouer"].is_pressed(event):
+        print("test")
     return var
 
 def controles(var):
