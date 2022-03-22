@@ -12,14 +12,15 @@ def affichage_menu_principal(screen, var):
     """
     screen.fill(COLOR["SILVER"])
     # Création du bouton "Jouer"
-    bouton_jouer = Button1(screen, (0.4, 0, 0.2, 0.2), "Jouer")
+    """
     image1 = apply_color(load_PIL_image("ressources/sprites/chess.png"), COLOR["RED"])
     image2 = apply_color(load_PIL_image("ressources/sprites/chess.png"), COLOR["YELLOW"])
     image3 = apply_color(load_PIL_image("ressources/sprites/chess.png"), COLOR["BLUE"])
     image4 = apply_color(load_PIL_image("ressources/sprites/chess.png"), COLOR["GREEN"])
-    bouton_jouer.change_color(COLOR["BRONZE"])
-    bouton_jouer.draw(screen)
     screen.blit(convert_PIL_to_pygame(image3), (20, 20))
+    """
+    var["button"]["jouer"].change_color(COLOR["BRONZE"])
+    var["button"]["jouer"].draw(screen)
 
     return var
 

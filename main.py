@@ -1,5 +1,6 @@
 import pygame
 from ressources.menus import controles, affichage_menu
+from ressources.inits import init_buttons
 
 pygame.init()
 screen_size = (960, 720)
@@ -15,6 +16,7 @@ def main():
     var = {
         "jeu_en_cours": True,
         "menuSelect": "principal",
+        "button": init_buttons(screen)
     }
 
     while var["jeu_en_cours"]:
