@@ -3,7 +3,7 @@ from ressources.menus import controles, affichage_menu
 from ressources.inits import init_buttons, init_texts
 
 pygame.init()
-screen_size = (960, 720)
+screen_size = (900, 660)
 
 def main():
     """
