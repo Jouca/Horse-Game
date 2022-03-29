@@ -203,3 +203,66 @@ class Button1(Button):
 
     def change_color(self, color):
         super().change_color(color)
+
+
+class Text:
+    """modélise un texte visuel formaté avec le style général du jeu."""
+
+    def __init__(self, window, relative_position, text, left_align=False, color=COLOR['WHITE']):
+        """méthode constructeur de la classe :
+        - `window` est la fenêtre sur laquelle est créé le bouton ;
+        - `relative_position` correspond à un 4-uple (`x`, `y`, `w`, `h`)
+        indiquant la position et les dimensions relatives selon les dimensions
+        de la fenêtre, toutes les valeurs doivent être comprises entre 0 et 1
+        exclus afin que le bouton soit visible, dans l'ordre :
+            - position relative `x`, positionnement x par rapport à la largeur
+            de la fenêtre (sur bord gauche lorsque `x` vaut 0, droit lorsque
+            `x` vaut 1 (sort du cadre)) ;
+            - position relative `y`, positionnement y par rapport à la longueur
+            de la fenêtre (sur le bord haut lorsque `y` vaut 0, sur le bord bas
+            lorsque `y` vaut 1 auquel cas ne sera pas visible puisque le
+            rectangle associé au texte sortira du cadre de la fenêtre)) ;
+            - valeur `w`, représente la largeur du texte selon la largeur de
+            la fenêtre (pour `w` égal à 0, le texte est apparent, seulement, son
+            emplacement sur l'axe des abscisse est peu certaine, ce qui est peu
+            recommendable pour contrôler la disposition des objets pour la partie
+            graphique. Lorsque `w` vaut 1, le texte possède une largeur dépendant
+            fortement de la longueur du texte) ;
+            - valeur `h`, représente la longueur du texte selon la proportion par
+            rapport à la longueur de la fenêtre. Cette valeur est approximative et
+            fait appel à une fonction permettant de trouver la taille de la police
+            sient le mieux l'exigence (pour `h` égal à 0, le texte est égal à 12,
+            ce qui et peu intéressant vu que cela rend impossible un
+            redimensionnement s'adaptant à la taille de la fenêtre vu que fixe.
+            Lorsque `h` vaut 1, le texte possède une longueur égale approche celle
+            de la fenêtre ou soulèvera une erreur si la résolution de l'écran est
+            supérieur à la marge laissé au préalable).
+        - `text` est le texte à afficher, doit être une chaîne de caractères ;
+        - `color` est la couleur du texte, par défaut `color` est `COLOR['WHITE']`
+        >>> text = Text((0.3, 0.4, 0.4, 0.2), "Hello world !")"""
+        window_w, window_h = window.get_size()
+        x_value = round(relative_position[0] * window_w)
+        y_value = round(relative_position[1] * window_h)
+        w_value = round(relative_position[2] * window_w)
+        font_size = get_font_size(round(relative_position[3] * window_h))
+        font = pygame.font.SysFont("./others/Anton-Regular.ttf", font_size)
+        self.text = text
+        self.text_image = font.render(text, 1 , color)
+        try:
+            x_value += window.rect.x
+            y_value += window.rect.y
+        # dans le cas où l'objet n'est pas dépendant d'un autre mais de la fenêtre de jeu
+        except AttributeError:
+            pass
+        self.rect = pygame.Rect(x_value, y_value, w_value, font_size)
+        self.text_pos = self.text_image.get_rect(center = self.rect.center)
+        if left_align:
+            self.text_pos[0] = x_value
+
+    def draw(self, surface):
+        """permet de dessiner le bouton sur une surface `surface` devant
+        être un objet pygame.Surface"""
+        surface.blit(self.text_image, self.text_pos)
+    
+    def get_text(self):
+        return self.text

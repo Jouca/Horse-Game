@@ -24,12 +24,25 @@ def affichage_menu_principal(screen, var):
 
     return var
 
+def affichage_menu_select_gamemode(var, screen):
+    """
+    Affiche le menu de sélection du mode de jeu.
+    """
+    screen.fill(COLOR["SILVER"])
+    # Création du bouton "Jouer"
+    var["text"]["select_gamemode"].draw(screen)
+    var["button"]["jouer"].change_color(COLOR["YELLOW"])
+    var["button"]["jouer"].draw(screen)
+    return var
+
 def affichage_menu(var, screen, clock):
     """
     Permet de gérer l'affichage des menus.
     """
     if var["menuSelect"] == "principal":
         var = affichage_menu_principal(screen, var)
+    elif var["menuSelect"] == "select_gamemode":
+        var = affichage_menu_select_gamemode(var, screen)
 
     pygame.display.flip()
     return var
@@ -39,7 +52,15 @@ def controles_principal(var, event):
     Gestion des contrôles du menu principal.
     """
     if var["button"]["jouer"].is_pressed(event):
-        print("test")
+        var["menuSelect"] = "select_gamemode"
+    return var
+
+def controles_select_gamemode(var, event):
+    """
+    Gestion des contrôles du menu de sélection du mode de jeu.
+    """
+    if var["button"]["jouer"].is_pressed(event):
+        var["menuSelect"] = "principal"
     return var
 
 def controles(var):
@@ -52,4 +73,6 @@ def controles(var):
 
         if var["menuSelect"] == "principal":
             var = controles_principal(var, event)
+        elif var["menuSelect"] == "select_gamemode":
+            var = controles_select_gamemode(var, event)
     return var
