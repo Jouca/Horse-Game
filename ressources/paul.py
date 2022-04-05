@@ -19,5 +19,4 @@ dico_plato = {
     "45": (None), "46": (None), "47": (None),
     "48": (None), "49": (None), "50": (None),
     "51": (None), "52": (None), "53": (None),
-    "54": (None), "55": (None), "56": (None)
-    }
+    "54": (None), "55": (None)}
