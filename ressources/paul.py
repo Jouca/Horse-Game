@@ -1,4 +1,8 @@
 import pygame
+try:
+    from constant import COLOR
+except ModuleNotFoundError:
+    from .constant import COLOR
 
 dico_plato = {
     "0": (None), "1": (None), "2": (None),
@@ -20,3 +24,12 @@ dico_plato = {
     "48": (None), "49": (None), "50": (None),
     "51": (None), "52": (None), "53": (None),
     "54": (None), "55": (None)}
+
+def show_table(window):
+    plateau = pygame.Surface((660, 660))
+    frame = pygame.Surface((308, 352))
+    for x_value in range(7):
+        rect = pygame.Rect(x_value * 44, 264, 44, 44)
+        pygame.draw.circle(frame, COLOR["GOLD"], rect.center, rect.width // 2)
+    plateau.blit(frame, (0, 0))
+    return plateau

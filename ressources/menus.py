@@ -1,9 +1,12 @@
+from tkinter import Variable
 import pygame
 try:
     from diego import apply_color, load_PIL_image, convert_PIL_to_pygame
+    from paul import show_table
     from constant import COLOR
 except ModuleNotFoundError:
     from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame
+    from .paul import show_table
     from .constant import COLOR
 
 def affichage_menu_principal(screen, var):
@@ -24,6 +27,17 @@ def affichage_menu_principal(screen, var):
 
     return var
 
+def affichage_menu_jeu(screen, var):
+    """
+    Affiche le menu du jeu (Paul)
+    """
+    screen.fill(COLOR["SILVER"])
+    plateau = show_table(screen)
+    screen.blit(plateau, (0, 0))
+    pygame.display.flip()
+    return var
+
+
 def affichage_menu_select_gamemode(var, screen):
     """
     Affiche le menu de sélection du mode de jeu.
@@ -43,6 +57,8 @@ def affichage_menu(var, screen, clock):
         var = affichage_menu_principal(screen, var)
     elif var["menuSelect"] == "select_gamemode":
         var = affichage_menu_select_gamemode(var, screen)
+    elif var["menuSelect"] == "jeu":
+        var = affichage_menu_jeu(screen, var)
 
     pygame.display.flip()
     return var
@@ -52,7 +68,7 @@ def controles_principal(var, event):
     Gestion des contrôles du menu principal.
     """
     if var["button"]["jouer"].is_pressed(event):
-        var["menuSelect"] = "select_gamemode"
+        var["menuSelect"] = "jeu"
     return var
 
 def controles_select_gamemode(var, event):
