@@ -1,8 +1,8 @@
 import pygame
 try:
-    from constant import COLOR, PLAYER_COLORS
+    from constant import COLOR, PLAYER_COLORS, PLATEAU_PLAYERS_COORDINATES
 except ModuleNotFoundError:
-    from .constant import COLOR, PLAYER_COLORS
+    from .constant import COLOR, PLAYER_COLORS, PLATEAU_PLAYERS_COORDINATES
 
 dico_plato = {
     "0": (None), "1": (None), "2": (None),
@@ -29,6 +29,7 @@ def show_table(window):
     plateau = pygame.Surface((660, 660))
     frame = pygame.Surface((308, 352))
     for couleur in enumerate(PLAYER_COLORS):
+        coord_x, coord_y, rotate = PLATEAU_PLAYERS_COORDINATES[couleur[0]]
         for value in range(7):
             rect_x = pygame.Rect(value * 44, 264, 44, 44)
             rect_y = pygame.Rect(264, value * 44, 44, 44)
@@ -39,6 +40,13 @@ def show_table(window):
         rect_stable = pygame.Rect(0, 0, 264, 264)
         pygame.draw.rect(frame, COLOR["LIGHT_"+couleur[1]], rect_stable)
         pygame.draw.rect(frame, COLOR[couleur[1]], rect_stable, 10)
-
-    plateau.blit(frame, (0, 0))
+        for value in range(1, 7):
+            rect_case = pygame.Rect(44 * value, 308, 44, 44)
+            pygame.draw.rect(frame, COLOR["LIGHT_"+couleur[1]], rect_case)
+            pygame.draw.rect(frame, COLOR["BLACK"], rect_case, 2)
+            font = pygame.font.Font(None, 40)
+            text = font.render(str(value), True, COLOR["BLACK"])
+            text_rect = text.get_rect(center=rect_case.center)
+            frame.blit(text, text_rect)
+        plateau.blit(pygame.transform.rotate(frame, rotate), (coord_x, coord_y))
     return plateau
