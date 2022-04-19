@@ -23,7 +23,15 @@ dico_plato = {
     "45": (286, 550), "46": (286, 506), "47": (286, 462),
     "48": (286, 418), "49": (286, 374), "50": (242, 374),
     "51": (198, 374), "52": (154, 374), "53": (110, 374),
-    "54": (66, 374), "55": (22, 374)}
+    "54": (66, 374), "55": (22, 374),
+    "1_yellow": (66, 330), "2_yellow": (110, 330), "3_yellow": (154, 330),
+    "4_yellow": (198, 330), "5_yellow": (242, 330), "6_yellow": (286, 330),
+    "1_blue": (330, 66), "2_blue": (330, 110), "3_blue": (330, 154),
+    "4_blue": (330, 198), "5_blue": (330, 242), "6_blue": (330, 286), 
+    "1_red": (594, 330), "2_red": (550, 330), "3_red": (506, 330),
+    "4_red": (462, 330), "5_red": (418, 330), "6_red": (374, 330),
+    "1_green": (330, 594), "2_green": (330, 550), "3_green": (330, 506),
+    "4_green": (330, 462), "5_green": (330, 418), "6_green": (330, 374),}
 
 def show_table(window):
     plateau = pygame.Surface((660, 660))
@@ -49,8 +57,7 @@ def show_table(window):
             text_rect = text.get_rect(center=rect_case.center)
             frame.blit(text, text_rect)
         plateau.blit(pygame.transform.rotate(frame, rotate), (coord_x, coord_y))
-    for l in range(56):
-        l = str(l)
+    for l in dico_plato:
         if dico_plato[l][0] != None:
             pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato[l][0], dico_plato[l][1], 22, 22))
     return plateau
