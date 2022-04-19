@@ -56,7 +56,7 @@ class Button:
     def __init__(self, window, relative_position, color):
         """méthode constructeur de la classe :
         - `window` est la fenêtre sur laquelle est créé le bouton ;
-        - `relative_position` correspond à un 3-uple (`x`, `y`, `w`) - ou 4-
+        - `relative_position` correspond à un 4-uple (`x`, `y`, `w`, `h`) - ou 4-
         uple sans que la dernière valeur soit gênante au code - indiquant la
         position et les dimensions relatives selon les dimensions `window` sur
         la fenêtre de jeu, toutes les valeurs doivent être comprises entre 0
@@ -72,6 +72,10 @@ class Button:
             la fenêtre (pour `w` égal à 0, le bouton est inexistant ce qui
             n'est pas très intéressant, lorsque `w` vaut 1, le bouton possède
             une largeur égale à celle de la fenêtre) ;
+            valeur `h`, représente la hauteur du bouton selon la hauteur de
+            la fenêtre (pour `h` égal à 0, le bouton est inexistant ce qui
+            n'est pas très intéressant, lorsque `h` vaut 1, le bouton possède
+            une hauteur égale à celle de la fenêtre) ;
         - `color`, enfin est la couleur du bouton, un 3-ple correspondant aux
         niveau de rouge, vert et de bleu (format RGB de couleur)."""
         self.relative_position = relative_position
@@ -88,6 +92,7 @@ class Button:
         x_value = round(self.relative_position[0] * window_w)
         y_value = round(self.relative_position[1] * window_h)
         w_value = round(self.relative_position[2] * window_w)
+        h_value = round(self.relative_position[3] * window_h)
         # dans le cas où window.rect.x existe, `window` est une surface
         # ayant été blit sur la fenêtre de jeu
         try:
@@ -100,7 +105,7 @@ class Button:
         except AttributeError:
             pass
         # attribution des valeurs d'emplacement
-        self.rect = pygame.Rect(x_value, y_value, w_value, w_value)
+        self.rect = pygame.Rect(x_value, y_value, w_value, h_value)
 
     def draw(self, surface):
         """permet de dessiner le bouton sur une surface `surface` devant
