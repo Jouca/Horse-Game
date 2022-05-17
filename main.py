@@ -10,6 +10,7 @@ def main():
     Boucle du jeu
     """
     pygame.display.set_caption("Jeu des chevaux")
+    pygame.display.set_icon(pygame.image.load("./ressources/sprites/chess.png"))
     screen = pygame.display.set_mode(screen_size)
     clock = pygame.time.Clock()
 

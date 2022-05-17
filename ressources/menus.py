@@ -5,12 +5,14 @@ try:
     from diego import players_list
     from paul import show_table, player_turn
     from antoine import de
+    from noa import MenuSelection
     from constant import COLOR
 except ModuleNotFoundError:
     from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
     from .diego import players_list
     from .paul import show_table, player_turn
     from .antoine import de
+    from .noa import MenuSelection
     from .constant import COLOR
 
 def affichage_menu_principal(screen, var):
@@ -51,6 +53,7 @@ def affichage_menu_select_gamemode(var, screen):
     """
     screen.fill(COLOR["SILVER"])
     # Création du bouton "Jouer"
+    MenuSelection(screen, var)
     var["text"]["select_gamemode"].draw(screen)
     var["button"]["jouer"].change_color(COLOR["YELLOW"])
     var["button"]["jouer"].draw(screen)
@@ -75,11 +78,9 @@ def controles_principal(var, event):
     Gestion des contrôles du menu principal.
     """
     if var["button"]["jouer"].is_pressed(event):
-        var["menuSelect"] = "jeu"
+        var["menuSelect"] = "select_gamemode"
         var["nbPlayers"] = 4
         var["nbHorses"] = 4
-        var["playerList"] = players_list(var["nbPlayers"])
-        var["playerTurn"], var["nbrTurn"] = select_first_player(var["playerList"])
     return var
 
 def controles_select_gamemode(var, event):
@@ -87,7 +88,21 @@ def controles_select_gamemode(var, event):
     Gestion des contrôles du menu de sélection du mode de jeu.
     """
     if var["button"]["jouer"].is_pressed(event):
-        var["menuSelect"] = "principal"
+        var["menuSelect"] = "jeu"
+        var["playerList"] = players_list(var["nbPlayers"])
+        var["playerTurn"], var["nbrTurn"] = select_first_player(var["playerList"])
+    elif var["button"]["up_player"].is_pressed(event):
+        if var["nbPlayers"] < 4:
+            var["nbPlayers"] += 1
+    elif var["button"]["down_player"].is_pressed(event):
+        if var["nbPlayers"] > 2:
+            var["nbPlayers"] -= 1
+    elif var["button"]["up_horse"].is_pressed(event):
+        if var["nbHorses"] < 4:
+            var["nbHorses"] += 1
+    elif var["button"]["down_horse"].is_pressed(event):
+        if var["nbHorses"] > 1:
+            var["nbHorses"] -= 1
     return var
 
 def controles_jeu(var, event):
