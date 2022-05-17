@@ -17,7 +17,11 @@ def main():
         "jeu_en_cours": True,
         "menuSelect": "principal",
         "button": init_buttons(screen),
-        "text": init_texts(screen)
+        "text": init_texts(screen),
+        "nbPlayers": 0,
+        "nbHorses": 0,
+        "playerTurn": None,
+        "playerList": None,
     }
 
     while var["jeu_en_cours"]:

@@ -1,11 +1,13 @@
 from tkinter import Variable
 import pygame
 try:
-    from diego import apply_color, load_PIL_image, convert_PIL_to_pygame
+    from diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
+    from diego import players_list
     from paul import show_table
     from constant import COLOR
 except ModuleNotFoundError:
-    from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame
+    from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
+    from .diego import players_list
     from .paul import show_table
     from .constant import COLOR
 
@@ -34,7 +36,7 @@ def affichage_menu_jeu(screen, var):
     screen.fill(COLOR["SILVER"])
     plateau = show_table()
     screen.blit(plateau, (0, 0))
-    pygame.display.flip()
+    var["button"]["dice"].draw(screen)
     return var
 
 
@@ -69,6 +71,10 @@ def controles_principal(var, event):
     """
     if var["button"]["jouer"].is_pressed(event):
         var["menuSelect"] = "jeu"
+        var["nbPlayers"] = 3
+        var["nbHorses"] = 4
+        var["playerList"] = players_list(var["nbPlayers"])
+        var["playerTurn"] = select_first_player(var["playerList"])
     return var
 
 def controles_select_gamemode(var, event):

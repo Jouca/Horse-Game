@@ -31,7 +31,8 @@ dico_plato = {
     "1_red": (594, 330), "2_red": (550, 330), "3_red": (506, 330),
     "4_red": (462, 330), "5_red": (418, 330), "6_red": (374, 330),
     "1_green": (330, 594), "2_green": (330, 550), "3_green": (330, 506),
-    "4_green": (330, 462), "5_green": (330, 418), "6_green": (330, 374),}
+    "4_green": (330, 462), "5_green": (330, 418), "6_green": (330, 374),
+}
 
 def show_table():
     plateau = pygame.Surface((660, 660))
@@ -57,7 +58,9 @@ def show_table():
             text_rect = text.get_rect(center=rect_case.center)
             frame.blit(text, text_rect)
         plateau.blit(pygame.transform.rotate(frame, rotate), (coord_x, coord_y))
+    """
     for l in dico_plato:
         if dico_plato[l][0] != None:
             pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato[l][0], dico_plato[l][1], 22, 22))
+    """
     return plateau

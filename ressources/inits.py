@@ -5,7 +5,8 @@ except ModuleNotFoundError:
 
 def init_buttons(screen):
     buttons = {
-        "jouer": Button1(screen, (0.4, 0.55, 0.2, 0.2), "Jouer")
+        "jouer": Button1(screen, (0.4, 0.55, 0.2, 0.2), "Jouer"),
+        "dice": Button1(screen, (0.75, 0.7, 0.22, 0.15), "Lancer les dés")
     }
     return buttons
 

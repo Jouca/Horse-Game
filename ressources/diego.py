@@ -1,4 +1,5 @@
 import pygame
+import random
 from PIL import ImageOps, Image
 try:
     from constant import FONT_HEIGHT, COLOR
@@ -11,14 +12,13 @@ def get_font_size(font_height):
     fenêtre de jeu."""
     if font_height < 19:
         return 12
-    else:
-        i = 0
-        try:
-            while font_height > FONT_HEIGHT[i]:
-                i += 1
-        except IndexError:
-            pass
-        return i + 12
+    i = 0
+    try:
+        while font_height > FONT_HEIGHT[i]:
+            i += 1
+    except IndexError:
+        pass
+    return i + 12
 
 
 def apply_color(image, color):
@@ -47,6 +47,22 @@ def convert_PIL_to_pygame(image):
 
     py_image = pygame.image.fromstring(data, size, mode)
     return py_image
+
+
+def select_first_player(list_players):
+    """
+    Sélectionne le premier joueur qui va jouer en premier.
+    """
+    return random.choice(list_players)
+
+
+def players_list(integer):
+    """
+    Crée la liste des joueurs en fonction du nombre de joueurs dans la partie.
+    """
+    if integer == 2:
+        return ["blue", "green"]
+    return ["blue", "red", "green", "yellow"][:integer]
 
 
 class Button:
