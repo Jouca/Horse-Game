@@ -22,6 +22,7 @@ def main():
         "nbHorses": 0,
         "playerTurn": None,
         "playerList": None,
+        "diceResult": 1,
     }
 
     while var["jeu_en_cours"]:

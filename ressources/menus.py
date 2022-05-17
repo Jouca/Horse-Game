@@ -4,11 +4,13 @@ try:
     from diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
     from diego import players_list
     from paul import show_table
+    from antoine import de
     from constant import COLOR
 except ModuleNotFoundError:
     from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
     from .diego import players_list
     from .paul import show_table
+    from .antoine import de
     from .constant import COLOR
 
 def affichage_menu_principal(screen, var):
@@ -36,7 +38,10 @@ def affichage_menu_jeu(screen, var):
     screen.fill(COLOR["SILVER"])
     plateau = show_table()
     screen.blit(plateau, (0, 0))
+    var["button"]["dice"].change_color(COLOR[var["playerTurn"].upper()])
     var["button"]["dice"].draw(screen)
+    dice = convert_PIL_to_pygame(load_PIL_image(f"ressources/sprites/face{var['diceResult']}.png"))
+    screen.blit(pygame.transform.scale(dice, (80, 80)), (730, 430))
     return var
 
 
@@ -85,6 +90,15 @@ def controles_select_gamemode(var, event):
         var["menuSelect"] = "principal"
     return var
 
+def controles_jeu(var, event):
+    """
+    Gestion des contrôles du jeu.
+    """
+    if var["button"]["dice"].is_pressed(event):
+        var["diceResult"] = de()
+        print(var["diceResult"])
+    return var
+
 def controles(var):
     """
     Occupation de la gestion des contrôles par rapport à leur menu.
@@ -97,4 +111,6 @@ def controles(var):
             var = controles_principal(var, event)
         elif var["menuSelect"] == "select_gamemode":
             var = controles_select_gamemode(var, event)
+        elif var["menuSelect"] == "jeu":
+            var = controles_jeu(var, event)
     return var
