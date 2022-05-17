@@ -53,7 +53,8 @@ def select_first_player(list_players):
     """
     Sélectionne le premier joueur qui va jouer en premier.
     """
-    return random.choice(list_players)
+    player_turn = random.randint(0, len(list_players) - 1)
+    return list_players[player_turn], player_turn
 
 
 def players_list(integer):

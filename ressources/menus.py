@@ -3,13 +3,13 @@ import pygame
 try:
     from diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
     from diego import players_list
-    from paul import show_table
+    from paul import show_table, player_turn
     from antoine import de
     from constant import COLOR
 except ModuleNotFoundError:
     from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player
     from .diego import players_list
-    from .paul import show_table
+    from .paul import show_table, player_turn
     from .antoine import de
     from .constant import COLOR
 
@@ -76,10 +76,10 @@ def controles_principal(var, event):
     """
     if var["button"]["jouer"].is_pressed(event):
         var["menuSelect"] = "jeu"
-        var["nbPlayers"] = 3
+        var["nbPlayers"] = 4
         var["nbHorses"] = 4
         var["playerList"] = players_list(var["nbPlayers"])
-        var["playerTurn"] = select_first_player(var["playerList"])
+        var["playerTurn"], var["nbrTurn"] = select_first_player(var["playerList"])
     return var
 
 def controles_select_gamemode(var, event):
@@ -97,6 +97,8 @@ def controles_jeu(var, event):
     if var["button"]["dice"].is_pressed(event):
         var["diceResult"] = de()
         print(var["diceResult"])
+        var["playerTurn"], var["nbrTurn"] = player_turn(var)
+        print("joueur " + str(var["nbrTurn"]))
     return var
 
 def controles(var):

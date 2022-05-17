@@ -58,9 +58,49 @@ def show_table():
             text_rect = text.get_rect(center=rect_case.center)
             frame.blit(text, text_rect)
         plateau.blit(pygame.transform.rotate(frame, rotate), (coord_x, coord_y))
+    # Carré NOIR
     """
     for l in dico_plato:
         if dico_plato[l][0] != None:
             pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato[l][0], dico_plato[l][1], 22, 22))
     """
+    pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato["0"][0], dico_plato["0"][1], 22, 22))
     return plateau
+
+def player_turn(var):
+    """
+    Permet de faire tourner les joueurs
+    """
+    nbr_turn = (var["nbrTurn"] + 1) % (len(var["playerList"]))
+    return var["playerList"][nbr_turn], nbr_turn
+
+def new_poney(var):
+    """
+    Permet de créer mon nouveau petit poney
+    """
+    if var["playerTurn"] == 'yellow':
+        pass
+
+
+
+class MyLittlePoney:
+    """
+    My Little Poney, My Little Poney, ahahahahah...
+    """
+    def __init__(self, position):
+        """
+        Initialise mon petit poney
+        """
+        self.position = position
+    
+    def get_position(self):
+        """
+        Permet de récuperer la position de mon petit poney
+        """
+        return self.position
+    
+    def set_position(self, new_position):
+        """
+        Permet de modifier la position de mon petit poney
+        """
+        self.position = new_position
