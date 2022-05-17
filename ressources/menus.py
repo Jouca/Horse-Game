@@ -32,7 +32,7 @@ def affichage_menu_jeu(screen, var):
     Affiche le menu du jeu (Paul)
     """
     screen.fill(COLOR["SILVER"])
-    plateau = show_table(screen)
+    plateau = show_table()
     screen.blit(plateau, (0, 0))
     pygame.display.flip()
     return var

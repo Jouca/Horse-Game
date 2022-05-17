@@ -33,7 +33,7 @@ dico_plato = {
     "1_green": (330, 594), "2_green": (330, 550), "3_green": (330, 506),
     "4_green": (330, 462), "5_green": (330, 418), "6_green": (330, 374),}
 
-def show_table(window):
+def show_table():
     plateau = pygame.Surface((660, 660))
     frame = pygame.Surface((308, 352))
     for couleur in enumerate(PLAYER_COLORS):
