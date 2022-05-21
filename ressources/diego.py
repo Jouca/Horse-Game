@@ -122,7 +122,6 @@ def check_player_not_colliding_same_color(var, player, position):
     return confirm
 
 
-#return (True, (player, horse.get_id(), horse))
 def check_horse_collision(var, horse_position, player):
     """
     Vérifie si un cheval est en collision avec un autre cheval.
@@ -136,7 +135,7 @@ def check_horse_collision(var, horse_position, player):
                     break
             if confirm is True:
                 break
-    return confirm, (player, player_horse.get_id(), player_horse)
+    return confirm, (player_other, player_horse.get_id(), player_horse)
     
 
 def handling_horses(var, player):
