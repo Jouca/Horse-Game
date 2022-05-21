@@ -2,9 +2,11 @@ import pygame
 import random
 from PIL import ImageOps, Image
 try:
-    from constant import FONT_HEIGHT, COLOR
+    from constant import FONT_HEIGHT, COLOR, LISTE_ECURIES
+    from paul import dico_plato, player_turn
 except ModuleNotFoundError:
-    from .constant import FONT_HEIGHT, COLOR
+    from .constant import FONT_HEIGHT, COLOR, LISTE_ECURIES
+    from .paul import dico_plato, player_turn
 
 def get_font_size(font_height):
     """récupère une valeur de taille de police selon `font_height` un entier
@@ -64,6 +66,143 @@ def players_list(integer):
     if integer == 2:
         return ["blue", "green"]
     return ["blue", "red", "green", "yellow"][:integer]
+
+
+def draw_horses(plateau, var):
+    """
+    Dessine les chevaux sur le plateau.
+    """
+    for player in var["playerList"]:
+        for horse in var[f"player{player}Horses"]:
+            horse.draw(plateau)
+
+
+def init_horses(var):
+    """
+    Initialise les chevaux.
+    """
+    for player in var["playerList"]:
+        for id in range(1, var["nbHorses"]+1):
+            var[f"player{player}Horses"].append(
+                Horse(
+                    player,
+                    id,
+                )
+            )
+    return var
+
+
+def check_horse_collision(var, position, player_original):
+    """
+    Vérifie si un cheval est en collision avec un autre.
+    """
+    for player in var["playerList"]:
+        for horse in var[f"player{player}Horses"]:
+            if horse.get_position() == position and player != player_original:
+                return (True, (player, horse.get_id(), horse))
+    return (False, (None, None, None))
+
+
+def handling_horses(var, player):
+    """
+    Gère les déplacements des chevaux d'un joueur.
+    """
+    for horse in var[f"player{player}Horses"]:
+        if horse.get_position() in LISTE_ECURIES and var["diceResult"] == 6:
+            var["actions"].append([player, horse, "exit_ecure"])
+        elif horse.get_position() not in LISTE_ECURIES:
+            var["actions"].append([player, horse, "move"])
+    if len(var["actions"]) >= 2:
+        var["menuSelect"] = "action"
+    elif len(var["actions"]) == 1:
+        var = horse_moving(var, 0)
+        var = update_horses(var)
+        var["actions"] = []
+        var["playerTurn"], var["nbrTurn"] = player_turn(var)
+    elif len(var["actions"]) == 0:
+        var["playerTurn"], var["nbrTurn"] = player_turn(var)
+    return var
+
+
+def horse_moving(var, id):
+    horse_position = None
+    player = var["actions"][id][0]
+    horse = var["actions"][id][1]
+    action_type = var["actions"][id][2]
+    print(var["actions"], id)
+    if action_type == "exit_ecure":
+        if player == "red":
+            horse.set_position("29")
+            horse_position = horse.get_position()
+        elif player == "blue":
+            horse.set_position("15")
+            horse_position = horse.get_position()
+        elif player == "green":
+            horse.set_position("43")
+            horse_position = horse.get_position()
+        elif player == "yellow":
+            horse.set_position("1")
+            horse_position = horse.get_position()
+    elif action_type == "move":
+        if int(horse.get_position()) + var["diceResult"] > 55:
+            horse.set_position(str(-56 + int(horse.get_position()) + var["diceResult"]))
+            horse_position = horse.get_position()
+        else:
+            horse.set_position(str(int(horse.get_position()) + var["diceResult"]))
+            horse_position = horse.get_position()
+    if check_horse_collision(var, horse_position, player)[0] is True:
+        player_collisioned, id, horse_collisioned = check_horse_collision(var, horse_position, player)[1]
+        horse_collisioned.set_position(f"{player_collisioned}_start{id}")
+    return var
+
+
+def update_horses(var):
+    for action in range(len(var["actions"])):
+        if var["actions"][action][0] == "red":
+            var["playerredHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
+        elif var["actions"][action][0] == "blue":
+            var["playerblueHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
+        elif var["actions"][action][0] == "green":
+            var["playergreenHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
+        elif var["actions"][action][0] == "yellow":
+            var["playeryellowHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
+    return var
+
+
+class Horse():
+    """
+    Classe représentant un cheval.
+    """
+    def __init__(self, player, horse_id):
+        self.player = player
+        self.horse_id = horse_id
+        self.position = dico_plato[f"{player}_start{horse_id}"]
+        self.position_name = f"{player}_start{horse_id}"
+        self.image = load_PIL_image(f"ressources/sprites/chess.png")
+        self.image = apply_color(self.image, COLOR[player.upper()])
+        self.image = convert_PIL_to_pygame(self.image)
+        self.image = pygame.transform.scale(self.image, (40, 40))
+
+    def draw(self, surface):
+        surface.blit(self.image, (self.position[0] - 20, self.position[1] - 20))
+
+    def draw_id(self, surface):
+        font = pygame.font.SysFont("Arial", 25)
+        font_background = pygame.font.SysFont("Arial", 29)
+        text = font.render(f"{self.horse_id}", True, (255, 255, 255))
+        text2 = font_background.render(f"{self.horse_id}", True, (0, 0, 0))
+        surface.blit(text2, (self.position[0] - 6, self.position[1] - 17))
+        surface.blit(text, (self.position[0] - 5, self.position[1] - 15))
+
+    def get_position(self):
+        return self.position_name
+
+    def get_id(self):
+        return self.horse_id
+
+    def set_position(self, position):
+        self.position = dico_plato[position]
+        self.position_name = position
 
 
 class Button:

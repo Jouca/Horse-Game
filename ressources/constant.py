@@ -18,6 +18,25 @@ COLOR = {
     'BRONZE':(205, 127, 50),
 }
 
+LISTE_ECURIES = [
+        "yellow_start1",
+        "yellow_start2",
+        "yellow_start3",
+        "yellow_start4",
+        "blue_start1",
+        "blue_start2",
+        "blue_start3",
+        "blue_start4",
+        "red_start1",
+        "red_start2",
+        "red_start3",
+        "red_start4",
+        "green_start1",
+        "green_start2",
+        "green_start3",
+        "green_start4",
+    ]
+
 PLAYER_COLORS = ["YELLOW", "BLUE", "RED", "GREEN"]
 PLATEAU_PLAYERS_COORDINATES = [(0, 0, 0), (308, 0, -90), (352, 308, 180), (0, 352, -270)]
 

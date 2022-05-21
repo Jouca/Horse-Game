@@ -11,6 +11,10 @@ def init_buttons(screen):
         "down_player": Button1(screen, (0.11, 0.52, 0.1, 0.1), ""),
         "up_horse": Button1(screen, (0.82, 0.27, 0.1, 0.1), ""),
         "down_horse": Button1(screen, (0.82, 0.52, 0.1, 0.1), ""),
+        "1": Button1(screen, (0.73, 0.8, 0.06, 0.1), "1"),
+        "2": Button1(screen, (0.8, 0.8, 0.06, 0.1), "2"),
+        "3": Button1(screen, (0.87, 0.8, 0.06, 0.1), "3"),
+        "4": Button1(screen, (0.94, 0.8, 0.06, 0.1), "4"),
     }
     return buttons
 

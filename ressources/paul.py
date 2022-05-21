@@ -32,6 +32,10 @@ dico_plato = {
     "4_red": (462, 330), "5_red": (418, 330), "6_red": (374, 330),
     "1_green": (330, 594), "2_green": (330, 550), "3_green": (330, 506),
     "4_green": (330, 462), "5_green": (330, 418), "6_green": (330, 374),
+    "yellow_start1": (50, 50), "yellow_start2": (150, 50), "yellow_start3": (50, 150), "yellow_start4": (150, 150),
+    "blue_start1": (450, 50), "blue_start2": (550, 50), "blue_start3": (450, 150), "blue_start4": (550, 150),
+    "red_start1": (450, 450), "red_start2": (450, 550), "red_start3": (550, 450), "red_start4": (550, 550),
+    "green_start1": (50, 450), "green_start2": (150, 450), "green_start3": (50, 550), "green_start4": (150, 550),
 }
 
 def show_table():
@@ -73,34 +77,3 @@ def player_turn(var):
     """
     nbr_turn = (var["nbrTurn"] + 1) % (len(var["playerList"]))
     return var["playerList"][nbr_turn], nbr_turn
-
-def new_poney(var):
-    """
-    Permet de créer mon nouveau petit poney
-    """
-    if var["playerTurn"] == 'yellow':
-        pass
-
-
-
-class MyLittlePoney:
-    """
-    My Little Poney, My Little Poney, ahahahahah...
-    """
-    def __init__(self, position):
-        """
-        Initialise mon petit poney
-        """
-        self.position = position
-    
-    def get_position(self):
-        """
-        Permet de récuperer la position de mon petit poney
-        """
-        return self.position
-    
-    def set_position(self, new_position):
-        """
-        Permet de modifier la position de mon petit poney
-        """
-        self.position = new_position

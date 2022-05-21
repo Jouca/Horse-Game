@@ -24,6 +24,11 @@ def main():
         "playerTurn": None,
         "playerList": None,
         "diceResult": 1,
+        "playerblueHorses": [],
+        "playerredHorses": [],
+        "playergreenHorses": [],
+        "playeryellowHorses": [],
+        "actions": [],
     }
 
     while var["jeu_en_cours"]:
