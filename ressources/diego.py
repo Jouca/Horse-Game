@@ -92,26 +92,76 @@ def init_horses(var):
     return var
 
 
-def check_horse_collision(var, position, player_original):
-    """
-    Vérifie si un cheval est en collision avec un autre.
-    """
-    for player in var["playerList"]:
-        for horse in var[f"player{player}Horses"]:
-            if horse.get_position() == position and player != player_original:
-                return (True, (player, horse.get_id(), horse))
-    return (False, (None, None, None))
+def check_player_can_enter(var, player, horse):
+    confirm = False
+    for horse_enter in var[f"player{player}Horses"]:
+        if player == "blue":
+            if horse_enter.get_position() == "15":
+                confirm = True
+        elif player == "red":
+            if horse_enter.get_position() == "29":
+                confirm = True
+        elif player == "green":
+            if horse_enter.get_position() == "43":
+                confirm = True
+        elif player == "yellow":
+            if horse_enter.get_position() == "1":
+                confirm = True
+    if confirm is False:
+        var["actions"].append([player, horse, "exit_ecure"])
 
+
+def check_player_not_colliding_same_color(var, player, position):
+    """
+    Vérifie si le joueur ne peut pas rentrer dans un autre cheval de la même couleur.
+    """
+    confirm = False
+    for player_other in var[f"player{player}Horses"]:
+        if player_other.get_position() == position:
+            confirm = True
+    return confirm
+
+
+#return (True, (player, horse.get_id(), horse))
+def check_horse_collision(var, horse_position, player):
+    """
+    Vérifie si un cheval est en collision avec un autre cheval.
+    """
+    confirm = False
+    for player_other in var["playerList"]:
+        if player_other != player:
+            for player_horse in var[f"player{player_other}Horses"]:
+                if player_horse.get_position() == horse_position:
+                    confirm = True
+                    break
+            if confirm is True:
+                break
+    return confirm, (player, player_horse.get_id(), player_horse)
+    
 
 def handling_horses(var, player):
     """
     Gère les déplacements des chevaux d'un joueur.
     """
     for horse in var[f"player{player}Horses"]:
+        try:
+            horse_position = str(int(horse.get_position()) + var["diceResult"])
+            if int(horse_position) > 55:
+                horse_position = str(-56 + int(horse_position) + var["diceResult"])
+        except ValueError:
+            if player == "red":
+                horse_position = "29"
+            elif player == "blue":
+                horse_position = "15"
+            elif player == "green":
+                horse_position = "43"
+            elif player == "yellow":
+                horse_position = "1"
         if horse.get_position() in LISTE_ECURIES and var["diceResult"] == 6:
-            var["actions"].append([player, horse, "exit_ecure"])
+            check_player_can_enter(var, player, horse)
         elif horse.get_position() not in LISTE_ECURIES:
-            var["actions"].append([player, horse, "move"])
+            if check_player_not_colliding_same_color(var, player, horse_position) is False:
+                var["actions"].append([player, horse, "move"])
     if len(var["actions"]) >= 2:
         var["menuSelect"] = "action"
     elif len(var["actions"]) == 1:
@@ -129,7 +179,6 @@ def horse_moving(var, id):
     player = var["actions"][id][0]
     horse = var["actions"][id][1]
     action_type = var["actions"][id][2]
-    print(var["actions"], id)
     if action_type == "exit_ecure":
         if player == "red":
             horse.set_position("29")
@@ -199,6 +248,9 @@ class Horse():
 
     def get_id(self):
         return self.horse_id
+
+    def get_player(self):
+        return self.player
 
     def set_position(self, position):
         self.position = dico_plato[position]
