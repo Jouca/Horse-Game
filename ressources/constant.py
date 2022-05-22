@@ -36,6 +36,32 @@ LISTE_ECURIES = [
         "green_start3",
         "green_start4",
     ]
+LISTE_ECHELLE = [
+    "1_yellow",
+    "2_yellow",
+    "3_yellow",
+    "4_yellow",
+    "5_yellow",
+    "6_yellow",
+    "1_blue",
+    "2_blue",
+    "3_blue",
+    "4_blue",
+    "5_blue",
+    "6_blue",
+    "1_red",
+    "2_red",
+    "3_red",
+    "4_red",
+    "5_red",
+    "6_red",
+    "1_green",
+    "2_green",
+    "3_green",
+    "4_green",
+    "5_green",
+    "6_green",
+]
 
 PLAYER_COLORS = ["YELLOW", "BLUE", "RED", "GREEN"]
 PLATEAU_PLAYERS_COORDINATES = [(0, 0, 0), (308, 0, -90), (352, 308, 180), (0, 352, -270)]
