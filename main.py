@@ -5,6 +5,7 @@ from ressources.inits import init_buttons, init_texts
 pygame.init()
 screen_size = (900, 660)
 
+
 def main():
     """
     Boucle du jeu
@@ -42,6 +43,7 @@ def main():
         var = controles(var)
 
         clock.tick(60)
+
 
 if __name__ == "__main__":
     main()

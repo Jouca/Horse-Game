@@ -1,21 +1,21 @@
-from cgitb import reset
-from tkinter import Variable
 import pygame
-
 try:
-    from diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player, draw_horses, init_horses, handling_horses, horse_moving, update_horses, check_win, reset_var
-    from diego import players_list
+    from diego import load_PIL_image, convert_PIL_to_pygame, select_first_player, draw_horses
+    from diego import players_list, init_horses, handling_horses, horse_moving, update_horses
+    from diego import check_win, reset_var
     from paul import show_table
     from antoine import de
     from noa import MenuSelection
     from constant import COLOR
 except ModuleNotFoundError:
-    from .diego import apply_color, load_PIL_image, convert_PIL_to_pygame, select_first_player, draw_horses, init_horses, handling_horses, horse_moving, update_horses, check_win, reset_var
-    from .diego import players_list
+    from .diego import load_PIL_image, convert_PIL_to_pygame, select_first_player, draw_horses
+    from .diego import players_list, init_horses, handling_horses, horse_moving, update_horses
+    from .diego import check_win, reset_var
     from .paul import show_table, player_turn
     from .antoine import de
     from .noa import MenuSelection
     from .constant import COLOR
+
 
 def affichage_menu_principal(screen, var):
     """
@@ -28,6 +28,7 @@ def affichage_menu_principal(screen, var):
     screen.blit(pygame.transform.scale(logo, (300, 300)), (300, 40))
 
     return var
+
 
 def affichage_menu_jeu(screen, var):
     """
@@ -46,7 +47,9 @@ def affichage_menu_jeu(screen, var):
     screen.blit(text, (725, 30))
     for player_id in range(len(var["playerList"])):
         player = var["playerList"][player_id]
-        score = score_font.render(f"{player} : "+str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()])
+        score = score_font.render(
+            f"{player} : " + str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()]
+        )
         screen.blit(score, (710, 100 + 50 * player_id))
     return var
 
@@ -64,7 +67,9 @@ def affichage_menu_win(screen, var):
     screen.blit(text, (725, 30))
     for player_id in range(len(var["playerList"])):
         player = var["playerList"][player_id]
-        score = score_font.render(f"{player} : "+str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()])
+        score = score_font.render(
+            f"{player} : " + str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()]
+        )
         screen.blit(score, (710, 100 + 50 * player_id))
     pygame.draw.rect(screen, COLOR["BLACK"], (95, 165, 460, 310))
     rect = pygame.Rect(100, 170, 450, 300)
@@ -102,7 +107,9 @@ def affichage_menu_action(screen, var):
     screen.blit(text, (725, 30))
     for player_id in range(len(var["playerList"])):
         player = var["playerList"][player_id]
-        score = score_font.render(f"{player} : "+str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()])
+        score = score_font.render(
+            f"{player} : " + str(var[f"nbHorse{player}finished"]), True, COLOR[player.upper()]
+        )
         screen.blit(score, (710, 100 + 50 * player_id))
     return var
 
@@ -117,6 +124,7 @@ def affichage_menu_select_gamemode(var, screen):
     var["button"]["jouer"].change_color(COLOR["YELLOW"])
     var["button"]["jouer"].draw(screen)
     return var
+
 
 def affichage_menu(var, screen, clock):
     """
@@ -136,6 +144,7 @@ def affichage_menu(var, screen, clock):
     pygame.display.flip()
     return var
 
+
 def controles_principal(var, event):
     """
     Gestion des contrôles du menu principal.
@@ -145,6 +154,7 @@ def controles_principal(var, event):
         var["nbPlayers"] = 4
         var["nbHorses"] = 4
     return var
+
 
 def controles_select_gamemode(var, event):
     """
@@ -169,6 +179,7 @@ def controles_select_gamemode(var, event):
             var["nbHorses"] -= 1
     return var
 
+
 def controles_jeu(var, event):
     """
     Gestion des contrôles du jeu.
@@ -178,6 +189,7 @@ def controles_jeu(var, event):
         handling_horses(var, var["playerTurn"])
         var = check_win(var)
     return var
+
 
 def controles_action(var, event):
     """
@@ -193,6 +205,7 @@ def controles_action(var, event):
             var = check_win(var)
             break
     return var
+
 
 def controles_win(var, event):
     """
@@ -217,6 +230,7 @@ def controles_win(var, event):
         var["menuSelect"] = "principal"
         var = reset_var(var, var["screen"])
     return var
+
 
 def controles(var):
     """

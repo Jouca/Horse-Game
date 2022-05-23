@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 try:
     from constant import COLOR
     from diego import Button
@@ -7,7 +6,11 @@ except ModuleNotFoundError:
     from .constant import COLOR
     from .diego import Button
 
+
 def MenuSelection(screen, var):
+    """
+    Affiche le menu Sélection
+    """
     pygame.draw.rect(screen, COLOR["BLACK"], (60, 60, 790, 500), 5)
     pygame.draw.rect(screen, COLOR["BLACK"], (100, 250, 80, 80), 4)
     pygame.draw.rect(screen, COLOR["BLACK"], (740, 250, 80, 80), 4)
@@ -24,12 +27,12 @@ def MenuSelection(screen, var):
     pygame.draw.polygon(screen, COLOR["BLACK"], ((740, 235), (820, 235), (780, 180)), 4)
     pygame.draw.polygon(screen, COLOR["BLACK"], ((740, 345), (820, 345), (780, 400)), 4)
     font = pygame.font.SysFont(None, 30)
-    img = font.render("Nombres de joueurs" , True, COLOR["BLACK"])
+    img = font.render("Nombres de joueurs", True, COLOR["BLACK"])
     screen.blit(img, (190, 275))
-    img = font.render("Nombres de pions" , True, COLOR["BLACK"])
+    img = font.render("Nombres de pions", True, COLOR["BLACK"])
     screen.blit(img, (535, 275))
     font = pygame.font.SysFont(None, 80)
     img = font.render(str(var["nbPlayers"]), True, COLOR["BLACK"])
     screen.blit(img, (125, 265))
-    img = font.render(str(var["nbHorses"]) , True, COLOR["BLACK"])
+    img = font.render(str(var["nbHorses"]), True, COLOR["BLACK"])
     screen.blit(img, (760, 265))

@@ -3,7 +3,11 @@ try:
 except ModuleNotFoundError:
     from .diego import Button1, Text
 
+
 def init_buttons(screen):
+    """
+    Initialise les boutons.
+    """
     buttons = {
         "jouer": Button1(screen, (0.4, 0.55, 0.2, 0.2), "Jouer"),
         "dice": Button1(screen, (0.75, 0.8, 0.22, 0.15), "Lancer le dé"),
@@ -22,7 +26,12 @@ def init_buttons(screen):
 
 
 def init_texts(screen):
+    """
+    Initialise les textes.
+    """
     texts = {
-        "select_gamemode": Text(screen, (0.11, 0.14, 0.15, 0.15), "Sélectionner votre mode de jeu", 50)
+        "select_gamemode": Text(
+            screen, (0.11, 0.14, 0.15, 0.15), "Sélectionner votre mode de jeu", 50
+        )
     }
     return texts
