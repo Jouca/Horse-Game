@@ -36,6 +36,7 @@ dico_plato = {
     "blue_start1": (450, 50), "blue_start2": (550, 50), "blue_start3": (450, 150), "blue_start4": (550, 150),
     "red_start1": (450, 450), "red_start2": (450, 550), "red_start3": (550, 450), "red_start4": (550, 550),
     "green_start1": (50, 450), "green_start2": (150, 450), "green_start3": (50, 550), "green_start4": (150, 550),
+    "finished": (-200, -200)
 }
 
 def show_table():
@@ -62,13 +63,6 @@ def show_table():
             text_rect = text.get_rect(center=rect_case.center)
             frame.blit(text, text_rect)
         plateau.blit(pygame.transform.rotate(frame, rotate), (coord_x, coord_y))
-    # Carré NOIR
-    """
-    for l in dico_plato:
-        if dico_plato[l][0] != None:
-            pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato[l][0], dico_plato[l][1], 22, 22))
-    """
-    pygame.draw.rect(plateau, COLOR["BLACK"], (dico_plato["0"][0], dico_plato["0"][1], 22, 22))
     return plateau
 
 def player_turn(var):

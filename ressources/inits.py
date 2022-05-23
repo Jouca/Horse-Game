@@ -15,6 +15,8 @@ def init_buttons(screen):
         "2": Button1(screen, (0.8, 0.8, 0.06, 0.1), "2"),
         "3": Button1(screen, (0.87, 0.8, 0.06, 0.1), "3"),
         "4": Button1(screen, (0.94, 0.8, 0.06, 0.1), "4"),
+        "rejouer": Button1(screen, (0.13, 0.52, 0.15, 0.15), "Rejouer"),
+        "menu": Button1(screen, (0.42, 0.52, 0.15, 0.15), "Menu")
     }
     return buttons
 

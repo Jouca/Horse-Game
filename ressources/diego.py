@@ -156,7 +156,8 @@ def check_move(var, player, horse, position):
         elif horse.get_position() == "5_blue" and var["diceResult"] == 6:
             horse.set_position("6_blue")
         elif horse.get_position() == "6_blue" and var["diceResult"] == 6:
-            print("Vous avez gagné !")
+            var["nbHorsebluefinished"] += 1
+            horse.set_position("finished")
         elif int(position) > 14 and int(horse.get_position()) <= 14 and int(horse.get_position()) >= 8:
             horse.set_position(str(14 - (int(position) - 14)))
         else:
@@ -175,7 +176,8 @@ def check_move(var, player, horse, position):
         elif horse.get_position() == "5_red" and var["diceResult"] == 6:
             horse.set_position("6_red")
         elif horse.get_position() == "6_red" and var["diceResult"] == 6:
-            print("Vous avez gagné !")
+            var["nbHorseredfinished"] += 1
+            horse.set_position("finished")
         elif int(position) > 28 and int(horse.get_position()) <= 28 and int(horse.get_position()) >= 22:
             horse.set_position(str(28 - (int(position) - 28)))
         else:
@@ -194,7 +196,8 @@ def check_move(var, player, horse, position):
         elif horse.get_position() == "5_green" and var["diceResult"] == 6:
             horse.set_position("6_green")
         elif horse.get_position() == "6_green" and var["diceResult"] == 6:
-            print("Vous avez gagné !")
+            var["nbHorsegreenfinished"] += 1
+            horse.set_position("finished")
         elif int(position) > 42 and int(horse.get_position()) <= 42 and int(horse.get_position()) >= 36:
             horse.set_position(str(42 - (int(position) - 42)))
         else:
@@ -211,7 +214,8 @@ def check_move(var, player, horse, position):
             field, colour = horse.get_position().split("_")
             field = int(field)
             if field == 6 and var["diceResult"] == 6:
-                print("Vous avez gagné !")
+                var["nbHorseyellowfinished"] += 1
+                horse.set_position("finished")
             elif field == var["diceResult"] - 1:
                 horse.set_position(f"{field + 1}_{colour}")
         else:
@@ -305,6 +309,8 @@ def handling_horses(var, player):
                 horse_position = "43"
             elif player == "yellow":
                 horse_position = "1"
+        if horse.get_position() == "finished":
+            continue
         if horse.get_position() in LISTE_ECURIES and var["diceResult"] == 6:
             check_player_can_enter(var, player, horse)
         elif horse.get_position() in LISTE_ECHELLE:
@@ -313,7 +319,6 @@ def handling_horses(var, player):
         elif horse.get_position() not in LISTE_ECURIES:
             if check_player_not_colliding_same_color(var, player, horse_position) is False:
                 var["actions"].append([player, horse, "move"])
-    print(var["actions"])
     if len(var["actions"]) >= 2:
         var["menuSelect"] = "action"
     elif len(var["actions"]) == 1:
@@ -331,6 +336,8 @@ def horse_moving(var, id):
     player = var["actions"][id][0]
     horse = var["actions"][id][1]
     action_type = var["actions"][id][2]
+    if horse.get_position() == "finished":
+        return var
     if action_type == "exit_ecure":
         if player == "red":
             horse.set_position("29")
@@ -349,7 +356,7 @@ def horse_moving(var, id):
             var, horse_position = check_move(var, player, horse, str(int(horse.get_position()) + var["diceResult"]))
         except ValueError:
             var, horse_position = check_move(var, player, horse, horse.get_position())
-    if check_horse_collision(var, horse_position, player)[0] is True:
+    if check_horse_collision(var, horse_position, player)[0] is True and horse.get_position() != "finished":
         player_collisioned, id, horse_collisioned = check_horse_collision(var, horse_position, player)[1]
         horse_collisioned.set_position(f"{player_collisioned}_start{id}")
     return var
@@ -365,6 +372,44 @@ def update_horses(var):
             var["playergreenHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
         elif var["actions"][action][0] == "yellow":
             var["playeryellowHorses"][var["actions"][action][1].get_id()-1] = var["actions"][action][1]
+    return var
+
+
+def check_win(var):
+    """
+    Vérifie si un joueur a gagné.
+    """
+    for player in var["playerList"]:
+        if var[f"nbHorse{player}finished"] >= var["nbHorses"]:
+            var["win"] = player
+            var["menuSelect"] = "win"
+            return var
+    return var
+
+
+def reset_var(var, screen):
+    var = {
+        "jeu_en_cours": True,
+        "menuSelect": "principal",
+        "screen": screen,
+        "button": var["button"],
+        "text": var["text"],
+        "nbPlayers": 0,
+        "nbHorses": 0,
+        "win": None,
+        "playerTurn": None,
+        "playerList": None,
+        "diceResult": 1,
+        "playerblueHorses": [],
+        "playerredHorses": [],
+        "playergreenHorses": [],
+        "playeryellowHorses": [],
+        "actions": [],
+        "nbHorseredfinished": 0,
+        "nbHorsebluefinished": 0,
+        "nbHorsegreenfinished": 0,
+        "nbHorseyellowfinished": 0,
+    }
     return var
 
 

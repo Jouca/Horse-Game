@@ -17,10 +17,12 @@ def main():
     var = {
         "jeu_en_cours": True,
         "menuSelect": "principal",
+        "screen": screen,
         "button": init_buttons(screen),
         "text": init_texts(screen),
         "nbPlayers": 0,
         "nbHorses": 0,
+        "win": None,
         "playerTurn": None,
         "playerList": None,
         "diceResult": 1,
@@ -29,6 +31,10 @@ def main():
         "playergreenHorses": [],
         "playeryellowHorses": [],
         "actions": [],
+        "nbHorseredfinished": 0,
+        "nbHorsebluefinished": 0,
+        "nbHorsegreenfinished": 0,
+        "nbHorseyellowfinished": 0,
     }
 
     while var["jeu_en_cours"]:
