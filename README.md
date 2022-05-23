@@ -13,7 +13,7 @@
 ---
 
 <h1>Horse Game</h1>
-<p>Ce projet a été codé pour le projet degroupe de troisième trimestre de l'année scolaire 2021-2022 dans la spécialité NSI (Numériques et Sciences de l'Informatique) en <b>Python</b>.
+<p>Ce projet a été codé pour le projet de groupe de troisième trimestre de l'année scolaire 2021-2022 dans la spécialité NSI (Numériques et Sciences de l'Informatique) en <b>Python</b>.
  
 ---
  
