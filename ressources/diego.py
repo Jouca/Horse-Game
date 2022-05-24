@@ -340,9 +340,11 @@ def handling_actions(var):
         var = horse_moving(var, 0)
         var = update_horses(var)
         var["actions"] = []
-        var["playerTurn"], var["nbrTurn"] = player_turn(var)
+        if var["diceResult"] != 6:
+            var["playerTurn"], var["nbrTurn"] = player_turn(var)
     elif len(var["actions"]) == 0:
-        var["playerTurn"], var["nbrTurn"] = player_turn(var)
+        if var["diceResult"] != 6:
+            var["playerTurn"], var["nbrTurn"] = player_turn(var)
     return var
 
 
